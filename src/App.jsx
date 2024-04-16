@@ -19,10 +19,10 @@ function App() {
   }, []);
   function filterRecipesComputeIntensive(recipes) {
     const now = performance.now();
-    while (performance.now() - now < 8000) {
+    while (performance.now() - now < 80) {
       //spin()
     }
-    return list.filter((word) => word.name.split(" ").length <= 4);
+    return recipes;
   }
   const filteredRecipes = filterRecipesComputeIntensive(recipes);
   return (
