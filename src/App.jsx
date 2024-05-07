@@ -4,9 +4,12 @@ import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import RecipeContainer from "./Components/RecipeContainer";
 import "./assets/style.css";
+import { useActionData } from "react-router-dom";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
+  const recipe = useActionData();
+
   useEffect(() => {
     fetch("https://api.sampleapis.com/recipes/recipes")
       .then((res) => {
@@ -14,17 +17,16 @@ function App() {
       })
       .then((data) => {
         setRecipes(data);
+        if (recipe) {
+          setRecipes([
+            { title: recipe.chani, id: "chani", description: recipe.chani },
+            ...data,
+          ]);
+        }
       });
     return () => console.log("unmounted");
   }, []);
-  function filterRecipesComputeIntensive(recipes) {
-    const now = performance.now();
-    while (performance.now() - now < 80) {
-      //spin()
-    }
-    return recipes;
-  }
-  const filteredRecipes = filterRecipesComputeIntensive(recipes);
+
   return (
     <>
       <Navbar />

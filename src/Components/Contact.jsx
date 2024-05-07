@@ -1,3 +1,19 @@
+import { useState } from "react";
+import { Form } from "react-router-dom";
+
 export default function Contact() {
-  return <h2>My contact info</h2>;
+  const [name, setName] = useState("");
+  return (
+    <>
+      <h2>My contact info</h2>
+      <Form state={name} action="/" method="POST">
+        <input
+          name="chani"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button type="submit">Create</button>
+      </Form>
+    </>
+  );
 }
