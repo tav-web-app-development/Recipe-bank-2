@@ -4,11 +4,14 @@ import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import RecipeContainer from "./Components/RecipeContainer";
 import "./assets/style.css";
-import { useActionData } from "react-router-dom";
+import { Outlet, useActionData, useLoaderData } from "react-router-dom";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
   const recipe = useActionData();
+  const loaderData = useLoaderData();
+  console.log(recipe);
+  console.log(loaderData);
 
   useEffect(() => {
     fetch("https://api.sampleapis.com/recipes/recipes")
@@ -19,7 +22,11 @@ function App() {
         setRecipes(data);
         if (recipe) {
           setRecipes([
-            { title: recipe.chani, id: "chani", description: recipe.chani },
+            {
+              title: recipe.testName,
+              id: "testName",
+              description: recipe.testName,
+            },
             ...data,
           ]);
         }
@@ -33,6 +40,7 @@ function App() {
       {recipes.map((data) => (
         <RecipeContainer recipe={data} key={data.id} />
       ))}
+      <Outlet />
       <Footer />
     </>
   );

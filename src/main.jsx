@@ -6,22 +6,24 @@ import Contact from "./Components/Contact.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <AppWrapper />,
+    element: <App />,
+    action: async ({ request }) => {
+      const formData = await request.formData();
+      const recipe = Object.fromEntries(formData);
+      return recipe;
+    },
+    loader: ({ request }) => {
+      return "Hello from loader";
+    },
     children: [
       {
-        path: "/",
-        element: <App />,
-        action: async ({ request }) => {
-          const formData = await request.formData();
-          const recipe = Object.fromEntries(formData);
-          return recipe;
-        },
-      },
-      {
-        path: "/contact",
-        element: <Contact />,
+        path: "recipes",
       },
     ],
+  },
+  {
+    path: "/contact",
+    element: <Contact />,
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
